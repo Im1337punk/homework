@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Variables
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            short socialCredit;
+            ushort walkSpeed;
+            int debt;
+            uint betAmount;
+            long money;
+            float damage;
+            double winCoefficient;
+            char sectorName;
+            string playerName;
+            bool playEmote;
+        }
+    }
+}
