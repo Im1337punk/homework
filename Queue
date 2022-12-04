@@ -11,7 +11,7 @@ namespace Queue
     {
         static void Main(string[] args)
         {
-            int hour = 60;
+            int minutesInHour = 60;
             int timeForOnePerson = 10;
             int waitTimeInMinutes;
             int waitTimeInMinutesLeft;
@@ -22,8 +22,8 @@ namespace Queue
             queue = Convert.ToInt32(Console.ReadLine());
 
             waitTimeInMinutes = timeForOnePerson * queue;
-            waitTimeInMinutesLeft = waitTimeInMinutes % hour;
-            waitTimeInHoursLeft = waitTimeInMinutes / hour;
+            waitTimeInMinutesLeft = waitTimeInMinutes % minutesInHour;
+            waitTimeInHoursLeft = waitTimeInMinutes / minutesInHour;
 
             Console.WriteLine($"Вы должны отстоять в очереди {waitTimeInHoursLeft} часа и {waitTimeInMinutesLeft} минут.");
         }
