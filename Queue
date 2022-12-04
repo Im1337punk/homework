@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Queue
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int hour = 60;
+            int timeForOnePerson = 10;
+            int waitTimeInMinutes;
+            int waitTimeInMinutesLeft;
+            int waitTimeInHoursLeft;
+            int queue;
+
+            Console.Write("Введите количество людей в очереди:");
+            queue = Convert.ToInt32(Console.ReadLine());
+
+            waitTimeInMinutes = timeForOnePerson * queue;
+            waitTimeInMinutesLeft = waitTimeInMinutes % hour;
+            waitTimeInHoursLeft = waitTimeInMinutes / hour;
+
+            Console.WriteLine($"Вы должны отстоять в очереди {waitTimeInHoursLeft} часа и {waitTimeInMinutesLeft} минут.");
+        }
+    }
+}
