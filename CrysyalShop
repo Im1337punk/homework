@@ -12,18 +12,18 @@ namespace CrystalShop
         static void Main(string[] args)
         {
             int gold;
-            int crystal;
+            int crystals;
             int crystalPrice = 12;
 
             Console.WriteLine($"Добро пожаловать в магазин кристаллов, вы можете купить кристаллы по цене {crystalPrice} золотых за штуку");
             Console.Write("Ваше количество золота:");
             gold = Convert.ToInt32(Console.ReadLine());
             Console.Write("Необходимое количество кристаллов:");
-            crystal = Convert.ToInt32(Console.ReadLine());
+            crystals = Convert.ToInt32(Console.ReadLine());
 
-            gold -= Convert.ToInt32(crystal * crystalPrice);
+            gold -= (crystals * crystalPrice);
 
-            Console.WriteLine($"У Вас {gold} золота и {crystal} кристаллов");
+            Console.WriteLine($"У Вас {gold} золота и {crystals} кристаллов");
         }
     }
 }
