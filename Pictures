@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Pictures
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int amountOfPictures = 52;
+            int picturesInLine = 3;
+            int filledLines;
+            int picturesBeyondMeasure;
+            filledLines = amountOfPictures / picturesInLine;
+            picturesBeyondMeasure = amountOfPictures % picturesInLine;
+            
+            Console.WriteLine($"Полностью заполненных рядов: {filledLines}");
+            Console.WriteLine($"Картинок сверх меры: {picturesBeyondMeasure}");
+            Console.ReadKey();
+        }
+    }
+}
