@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CrystalShop
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int gold;
+            int crystal;
+            int crystalPrice = 12;
+
+            Console.WriteLine($"Добро пожаловать в магазин кристаллов, вы можете купить кристаллы по цене {crystalPrice} золотых за штуку");
+            Console.Write("Ваше количество золота:");
+            gold = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Необходимое количество кристаллов:");
+            crystal = Convert.ToInt32(Console.ReadLine());
+
+            gold -= Convert.ToInt32(crystal * crystalPrice);
+
+            Console.WriteLine($"У Вас {gold} золота и {crystal} кристаллов");
+        }
+    }
+}
