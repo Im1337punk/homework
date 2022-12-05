@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Transposition
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = "D2";
+            string surname = "R2";
+
+            Console.WriteLine($"{name}-{surname}");
+
+            string transposition = name;
+
+            name = surname;
+            surname = transposition;
+
+            Console.WriteLine($"{name}-{surname}");
+        }
+    }
+}
