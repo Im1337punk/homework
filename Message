@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Message
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string message;
+            int iterationCount;
+
+            Console.Write("Введите желаемое сообщение: ");
+            message = Console.ReadLine();
+            Console.Write("Введите количество повторений сообщения: ");
+            iterationCount = Convert.ToInt32(Console.ReadLine());
+
+            while(iterationCount-- > 0 )
+            {
+                Console.WriteLine(message);
+            }
+        }
+    }
+}
