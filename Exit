@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Exit
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string exitProgram = "";
+
+            while (exitProgram != "exit")
+            {
+                Console.WriteLine("Для выхода из цикла, введите слово exit");
+                exitProgram = Console.ReadLine();
+            }
+        }
+    }
+}
