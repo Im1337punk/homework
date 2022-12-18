@@ -10,12 +10,13 @@ namespace Exit
     {
         static void Main(string[] args)
         {
-            string exitProgram = "";
+            string commandExit = "exit";
+            string keyInput = "";
 
-            while (exitProgram != "exit")
+            while(keyInput !=  commandExit)
             {
                 Console.WriteLine("Для выхода из цикла, введите слово exit");
-                exitProgram = Console.ReadLine();
+                keyInput = Console.ReadLine();
             }
         }
     }
