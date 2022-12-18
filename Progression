@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Progression
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int initialValue = 5;
+            int augmentValue = 7;
+            int endValue = 96;
+            
+            for (int i = initialValue; i <= endValue; i += augmentValue) //цикл for выбран, т.к. известны начальное и конечное значения, а также правило, по которому эти значения изменяются
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}
