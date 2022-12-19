@@ -12,23 +12,23 @@ namespace RandomNumber
         static void Main(string[] args)
         {
             int number = 0;
-            int numberMultiplicity3 = 3;
-            int numberMultiplicity5 = 5;
+            int firstDivisor = 3;
+            int secondDivisor = 5;
             int sum = 0;
 
             int minRandom = 0;
             int maxRandom = 100;
-            Random rand = new Random();
+            Random random = new Random();
             
-            number = rand.Next(minRandom, maxRandom + 1);
+            number = random.Next(minRandom, maxRandom + 1);
 
             for (int i = 0; i <= number; i++)
             {
-                if(i % numberMultiplicity3 == 0 || i % numberMultiplicity5 == 0)
+                if(i % firstDivisor == 0 || i % secondDivisor == 0)
                 sum += i;
             }
 
-            Console.WriteLine($"Ваше число: {number}, сумма чисел кратных {numberMultiplicity5} или {numberMultiplicity3} равна {sum}.");
+            Console.WriteLine($"Ваше число: {number}, сумма чисел кратных {firstDivisor} или {secondDivisor} равна {sum}.");
         }
     }
 }
