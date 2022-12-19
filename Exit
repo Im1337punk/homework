@@ -13,9 +13,9 @@ namespace Exit
             string commandExit = "exit";
             string keyInput = "";
 
-            while(keyInput !=  commandExit)
+            while (keyInput != commandExit)
             {
-                Console.WriteLine("Для выхода из цикла, введите слово exit");
+                Console.WriteLine($"Для выхода из цикла, введите слово {commandExit}.");
                 keyInput = Console.ReadLine();
             }
         }
