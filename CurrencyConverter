@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CurrencyConverter
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string ConvertRubToUsdCommand = "1";
+            const string ConvertRubToBtcCommand = "2";
+            const string ConvertUsdToBtcCommand = "3";
+            const string ConvertUsdToRubCommand = "4";
+            const string ConvertBtcToUsdCommand = "5";
+            const string ConvertBtcToRubCommand = "6";
+            const string ExitCommand = "7";
+
+            float rubBalance;
+            float usdBalance;
+            float btcBalance;
+
+            string keyInput = "";
+            bool isOpen = true;
+
+            int usdToRubRate = 60;
+            int btcToUsdRate = 16700;
+            int btcToRubRate = 1002000;
+            float usdToBtcRate = 0.00006f;
+            float rubToUsdRate = 0.014f;
+            float rubToBtcRate = 0.000000999f;
+            float currencyAmount;
+
+            Console.WriteLine($"Добро пожаловать в пункт обмена валют, Вы можете обменять рубли на доллары по курсу 1 доллар за {usdToRubRate} рублей. \nТакже Вы можете обменять ваши доллары на BTC по курсу 1 BTC за {btcToUsdRate} доолларов.");
+            Console.Write($"Введите количество рублей на счету: ");
+            rubBalance = Convert.ToSingle(Console.ReadLine());
+            Console.Write($"Введите количество долларов на счету: ");
+            usdBalance = Convert.ToSingle(Console.ReadLine());
+            Console.Write($"Введите количество BTC на счету: ");
+            btcBalance = Convert.ToSingle(Console.ReadLine());
+
+            while (isOpen)
+            {
+                Console.Clear();
+
+                Console.WriteLine($"У Вас на балансе {rubBalance} рублей, {usdBalance} долларов и {btcBalance} BTC.");
+                Console.WriteLine($"Для конвертации рублей в доллары, введите: {ConvertRubToUsdCommand}");
+                Console.WriteLine($"Для конвертации рублей в BTC, введите: {ConvertRubToBtcCommand}");
+                Console.WriteLine($"Для конвертации долларов в BTC, введите: {ConvertUsdToBtcCommand}");
+                Console.WriteLine($"Для конвертации долларов в рубли, введите: {ConvertUsdToRubCommand}");
+                Console.WriteLine($"Для конвертации BTC в доллары, введите: {ConvertBtcToUsdCommand}");
+                Console.WriteLine($"Для конвертации BTC в рубли, введите: {ConvertBtcToRubCommand}");
+                Console.WriteLine($"Для выхода из программы, введите: {ExitCommand}");
+
+                keyInput = Console.ReadLine();
+
+                switch (keyInput)
+                {  
+                    case ConvertRubToUsdCommand:
+                        Console.Write($"Введите нужное Вам количество долларов: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                        
+                        if (rubBalance >= currencyAmount / rubToUsdRate)
+                        {
+                            rubBalance -= currencyAmount / rubToUsdRate;
+                            usdBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Недостаточно рублей на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+                    
+                    case ConvertRubToBtcCommand:
+                        Console.Write($"Введите нужное Вам количество BTC: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                       
+                        if (rubBalance >= currencyAmount * btcToRubRate)
+                        {
+                            rubBalance -= currencyAmount * btcToRubRate;
+                            btcBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Недостаточно рублей на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+                    
+                    case ConvertUsdToBtcCommand:
+                        Console.Write($"Введите нужное Вам количество BTC: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                        
+                        if (usdBalance >= currencyAmount * btcToUsdRate)
+                        {
+                            usdBalance -= currencyAmount * btcToUsdRate;
+                            btcBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Недостаточно долларов на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+                   
+                    case ConvertUsdToRubCommand:
+                        Console.Write($"Введите нужное Вам количество рублей: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                        
+                        if (usdBalance >= currencyAmount * rubToUsdRate)
+                        {
+                            usdBalance -= currencyAmount * rubToUsdRate;
+                            rubBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"недостаточно долларов на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+                   
+                    case ConvertBtcToUsdCommand:
+                        Console.WriteLine($"Введите нужное Вам количество долларов: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                        
+                        if (btcBalance >= currencyAmount * usdToBtcRate)
+                        {
+                            btcBalance -= currencyAmount * usdToBtcRate;
+                            usdBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Недостаточно BTC на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+                    
+                    case ConvertBtcToRubCommand:
+                        Console.Write($"Введите нужное Вам количество рублей: ");
+                        currencyAmount = Convert.ToSingle(Console.ReadLine());
+                        
+                        if (btcBalance >= currencyAmount * rubToBtcRate)
+                        {
+                            btcBalance -= currencyAmount * rubToBtcRate;
+                            rubBalance += currencyAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Недостаточно BTC на счёте");
+                            Console.ReadKey();
+                        }
+                        break;
+
+                    case ExitCommand:
+                        isOpen = false;
+                        break;
+
+                    default:
+                        Console.WriteLine($"Ошибка ввода команды");
+                        Console.ReadKey();
+                        break;
+                }
+             
+                Console.WriteLine($"У Вас на счету {rubBalance} рублей, {usdBalance} долларов и {btcBalance} BTC");
+            }
+        }
+    }
+}
