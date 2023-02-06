@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleMenu
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string PaintConsoleRedCommand = "1";
+            const string PaintConsoleGreenCommand = "2";
+            const string PaintConsoleBlueCommand = "3";
+            const string ExitCommand = "4";
+
+            string login = "";
+            string password = "";
+
+            string keyInput = "";
+            bool isOpen = true;
+
+            Console.Write($"Введите логин: ");
+            login = Console.ReadLine();
+            Console.Write($"Введите пароль: ");
+            password = Console.ReadLine();
+
+            while(isOpen)
+            {
+                Console.Clear();
+
+                Console.WriteLine($"Для окрашивания консоли в красный цвет нажмите клавишу {PaintConsoleRedCommand}");
+                Console.WriteLine($"Для окрашивания консоли в зелёный цвет нажмите клавишу {PaintConsoleGreenCommand}");
+                Console.WriteLine($"Для окрашивания консоли в синий цвет нажмите клавишу {PaintConsoleBlueCommand}");
+                Console.WriteLine($"Для выхода из программы нажмите клавишу {ExitCommand}");
+
+                keyInput = Console.ReadLine();
+
+                switch(keyInput)
+                {
+                    case PaintConsoleRedCommand:
+                        Console.BackgroundColor= ConsoleColor.Red;
+                        Console.Clear();
+                        break;
+
+                    case PaintConsoleGreenCommand:
+                        Console.BackgroundColor= ConsoleColor.Green;
+                        Console.Clear();
+                        break;
+
+                    case PaintConsoleBlueCommand:
+                        Console.BackgroundColor= ConsoleColor.Blue;
+                        Console.Clear();
+                        break;
+
+                    case ExitCommand:
+                        isOpen= false;
+                        break;
+    
+                    default:
+                        Console.WriteLine($"Ошибка ввода.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+    }
+}
