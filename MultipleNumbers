@@ -12,17 +12,22 @@ namespace MultipleNumbers
         {
             int minNumber = 100;
             int maxNumber = 999;
-            int multipleNumberSum = 0;
-            
+            int multipleNumberCount = 0;
+
             Random random = new Random();
             int randomNumber = random.Next(1, 28);
 
-            for(int i = randomNumber; i <= maxNumber; i += randomNumber)
+            for (int i = minNumber; i <= maxNumber; i++)
             {
-                if (i >= minNumber && i <= maxNumber)
-                multipleNumberSum += i;
+                for (int multipleNumberSum = randomNumber; multipleNumberSum <= i; multipleNumberSum += randomNumber)
+                {
+                    if (multipleNumberSum == i)
+                    {
+                        multipleNumberCount++;
+                    }
+                }
             }
-            Console.WriteLine($"Сумма трёхзначных чисел кратных {randomNumber} равняется {multipleNumberSum}");
+            Console.WriteLine($"Сумма трёхзначных чисел кратных {randomNumber} равняется {multipleNumberCount}");
         }
     }
 }
