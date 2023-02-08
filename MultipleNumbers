@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MultipleNumbers
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int minNumber = 100;
+            int maxNumber = 999;
+            int multipleNumberSum = 0;
+            
+            Random random = new Random();
+            int randomNumber = random.Next(1, 28);
+
+            for(int i = randomNumber; i <= maxNumber; i += randomNumber)
+            {
+                if (i >= minNumber && i <= maxNumber)
+                multipleNumberSum += i;
+            }
+            Console.WriteLine($"Сумма трёхзначных чисел кратных {randomNumber} равняется {multipleNumberSum}");
+        }
+    }
+}
