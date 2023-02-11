@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultipleNumbers
 {
@@ -10,24 +6,22 @@ namespace MultipleNumbers
     {
         static void Main(string[] args)
         {
-            int minNumber = 100;
-            int maxNumber = 999;
-            int multipleNumberCount = 0;
-
+            int minRange = 100;
+            int maxRange = 999;
+            int counter = 0;
+            
             Random random = new Random();
-            int randomNumber = random.Next(1, 28);
-
-            for (int i = minNumber; i <= maxNumber; i++)
+            int minRandomValue = 1;
+            int maxRandomValue = 27;
+            int randomNumber = random.Next(minRandomValue, maxRandomValue + 1);
+          
+            for(int i = randomNumber; i <= maxRange; i += randomNumber)
             {
-                for (int multipleNumberSum = randomNumber; multipleNumberSum <= i; multipleNumberSum += randomNumber)
-                {
-                    if (multipleNumberSum == i)
-                    {
-                        multipleNumberCount++;
-                    }
-                }
+                if (i >= minRange)
+                    counter++;
             }
-            Console.WriteLine($"Сумма трёхзначных чисел кратных {randomNumber} равняется {multipleNumberCount}");
+            
+            Console.WriteLine($"Количество трёхзначных чисел кратных {randomNumber} равняется {counter}");
         }
     }
 }
