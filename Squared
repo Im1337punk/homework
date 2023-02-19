@@ -1,0 +1,30 @@
+using System;
+
+namespace Squared
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int randomNumber;
+            int initialValue = 2;
+            int exponentValue = 1;
+            int greatValue;
+            
+            Random random = new Random();
+            int minRangeValue = 2;
+            int maxRangeValue = 1024;
+            randomNumber = random.Next(minRangeValue, maxRangeValue + 1);
+
+            for (int i = initialValue; i <= randomNumber; i *= initialValue)
+            {
+                    exponentValue++;
+            }
+
+            greatValue = Convert.ToInt32(Math.Pow(initialValue, exponentValue));
+
+            Console.WriteLine($"Случайное число равняется {randomNumber}.");
+            Console.WriteLine($"Число, равное или превышающее это значение равняется {greatValue}. Или {initialValue} в степени {exponentValue}.");
+        }
+    }
+}
