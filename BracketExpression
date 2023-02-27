@@ -1,0 +1,58 @@
+using System;
+
+namespace BracketExpression
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string openBracket = "(";
+            string closeBracket = ")";
+            int bracketsAmount = 0;
+            string bracketExpression;
+            string userInput;
+            int nestDepth = 0;
+
+            Console.WriteLine($"Введите скобочное выражение: ");
+            userInput = Console.ReadLine();
+            bracketExpression = userInput;
+
+            for (int i = 0; i < bracketExpression.Length; i++)
+            {
+                if (bracketExpression[i] == '(')
+                {
+                    bracketsAmount++;
+                    
+                    if (nestDepth < bracketsAmount)
+                    {
+                        nestDepth = bracketsAmount;
+                    }
+                }
+                else if (bracketExpression[i] == ')')
+                {
+                    bracketsAmount--;
+                    
+                    if (bracketsAmount < 0)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Введено неверное выражение.");
+                    break;
+                }
+            }
+
+            if (bracketsAmount != 0)
+            {
+                Console.WriteLine($"Введено неверное выражение.");
+            }
+            else
+            {
+
+                Console.WriteLine($"Глубина вложенности скобочного выражения равна: {nestDepth}");
+            }
+        }
+    }
+}
