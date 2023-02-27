@@ -9,7 +9,7 @@ namespace Squared
             int randomNumber;
             int initialValue = 2;
             int exponentValue = 1;
-            int greatValue;
+            int greatValue = 2;
             
             Random random = new Random();
             int minRangeValue = 2;
@@ -21,7 +21,10 @@ namespace Squared
                     exponentValue++;
             }
 
-            greatValue = Convert.ToInt32(Math.Pow(initialValue, exponentValue));
+            for (int i = 1; i < exponentValue; i++)
+            {
+                greatValue *= initialValue;
+            }
 
             Console.WriteLine($"Случайное число равняется {randomNumber}.");
             Console.WriteLine($"Число, равное или превышающее это значение равняется {greatValue}. Или {initialValue} в степени {exponentValue}.");
