@@ -6,8 +6,8 @@ namespace BracketExpression
     {
         static void Main(string[] args)
         {
-            string openBracket = "(";
-            string closeBracket = ")";
+            int openBracket = Convert.ToInt32('(');
+            int closeBracket = Convert.ToInt32(')');
             int bracketsAmount = 0;
             string bracketExpression;
             string userInput;
@@ -19,7 +19,7 @@ namespace BracketExpression
 
             for (int i = 0; i < bracketExpression.Length; i++)
             {
-                if (bracketExpression[i] == '(')
+                if (bracketExpression[i] == openBracket)
                 {
                     bracketsAmount++;
                     
@@ -28,7 +28,7 @@ namespace BracketExpression
                         nestDepth = bracketsAmount;
                     }
                 }
-                else if (bracketExpression[i] == ')')
+                else if (bracketExpression[i] == closeBracket)
                 {
                     bracketsAmount--;
                     
