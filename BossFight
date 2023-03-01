@@ -1,0 +1,110 @@
+using System;
+
+namespace BossFight
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string FireRuneCommand = "1";
+            const string GhostSwordCommand = "2";
+            const string MagicShieldCommand = "3";
+            const string DeathSentenceCommand = "4";
+
+            string keyInput = "";
+            bool isFighting = true;
+
+            Random random = new Random();
+            int minBossHealth = 1000;
+            int maxBossHealth = 1200;
+            int minPlayerHealth = 900;
+            int maxPlayerHealth = 1000;
+            int bossHealth = random.Next(minBossHealth, maxBossHealth + 1);
+            int playerHealth = random.Next(minPlayerHealth, maxPlayerHealth + 1);
+            int minRuneDebuffValue = 8;
+            int healthRegenerationValue = 200;
+            bool playerLuck = true;
+            int noDamageValue = 0;
+            int minDamageValue = 15;
+            int averageDamageValue = 470;
+            int maxDamageValue = 1100;
+
+            Console.WriteLine($"У главного героя {playerHealth} здоровья. У босса {bossHealth} здоровья.");
+
+            while (isFighting)
+            {
+                int minDamage = random.Next(noDamageValue, minDamageValue + 1);
+                int averageDamage = random.Next(minDamageValue, averageDamageValue + 1);
+                int maxDamage = random.Next(averageDamageValue, maxDamageValue + 1);
+                int extraDamage = random.Next(noDamageValue, minDamageValue + 1);
+
+                Console.WriteLine($"\nДля использования заклинания 'Огненные руны' введите: {FireRuneCommand}");
+                Console.WriteLine($"Для использования заклинания 'Меч духов' введите: {GhostSwordCommand}");
+                Console.WriteLine($"Для использования заклинания 'Магический щит' введите: {MagicShieldCommand}");
+                Console.WriteLine($"Для использования заклинания 'Смертный приговор' введите: {DeathSentenceCommand}\n");
+
+                keyInput = Console.ReadLine();
+
+                switch (keyInput)
+                {
+                    case FireRuneCommand:
+                        playerHealth -= minRuneDebuffValue;
+                        bossHealth = bossHealth - (minDamage + extraDamage);
+                        Console.Write($"\nИспользовав заклинание 'Огненные руны', главный герой оставил боссу {bossHealth} здоровяь, получив {minRuneDebuffValue} урона.\n");
+                        break;
+
+                    case GhostSwordCommand:
+                        playerHealth = playerHealth - random.Next(minDamage, averageDamage);
+                        bossHealth = bossHealth - (averageDamage + extraDamage);
+                        Console.Write($"\nИспользовав заклинание 'Меч духов', главный герой, сойдясь в ближнем бою, оставил боссу {bossHealth} здоровья.\n");
+                        break;
+
+                    case MagicShieldCommand:
+                        if (playerLuck == true && playerHealth <= maxPlayerHealth - healthRegenerationValue)
+                        {
+                            playerHealth += healthRegenerationValue;
+                            Console.Write($"\nУдачно укрывшись за щитом, главный герой восстанвил {healthRegenerationValue} здоровья.\n");
+                        }
+                        else
+                        {
+                            playerHealth -= averageDamage;
+                            Console.Write($"\nГлавному герою не удалось укрыться за щитом, был получен урон.\n");
+                        }
+                        break;
+
+                    case DeathSentenceCommand:
+                        if (playerLuck == true && playerHealth > 0 && bossHealth > 0)
+                        {
+                            bossHealth -= maxDamage;
+                            Console.WriteLine($"\nБоссу был нанесён критический урон в количестве {maxDamage} единиц.\n");
+                        }
+                        else
+                        {
+                            playerHealth -= maxDamage;
+                            Console.Write($"\nГлавному герою был нанесён критический урон в количестве {maxDamage} единиц.\n");
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine($"\nВведена не верная команда.\n");
+                        break;
+                }
+
+                isFighting = playerHealth > 0 && bossHealth > 0;
+            }
+
+            if (playerHealth <= 0 && bossHealth <= 0)
+            {
+                Console.Write($"\nГлавный герой и босс были повержены в схватке.");
+            }
+            else if (playerHealth <= 0)
+            {
+                Console.Write($"\nГлавный герой был повержен.");
+            }
+            else
+            {
+                Console.Write($"\nБосс был повержен.");
+            }
+        }
+    }
+}
