@@ -8,7 +8,7 @@ namespace BossFight
         {
             const string FireRuneCommand = "1";
             const string GhostSwordCommand = "2";
-            const string MagicShieldCommand = "3";
+            const string HealthRestoreCommand = "3"; //может быть использована только после использования чеетвёртого скилла
             const string DeathSentenceCommand = "4";
 
             string keyInput = "";
@@ -22,8 +22,8 @@ namespace BossFight
             int bossHealth = random.Next(minBossHealth, maxBossHealth + 1);
             int playerHealth = random.Next(minPlayerHealth, maxPlayerHealth + 1);
             int minRuneDebuffValue = 8;
-            int healthRegenerationValue = 200;
-            bool playerLuck = true;
+            int healthRestoreValue = 350;
+            bool havePlayerLuck = false;
             int noDamageValue = 0;
             int minDamageValue = 15;
             int averageDamageValue = 470;
@@ -38,9 +38,11 @@ namespace BossFight
                 int maxDamage = random.Next(averageDamageValue, maxDamageValue + 1);
                 int extraDamage = random.Next(noDamageValue, minDamageValue + 1);
 
+                Console.WriteLine($"\nУ главного героя {playerHealth} здоровья. У босса {bossHealth} здоровья.\n");
+
                 Console.WriteLine($"\nДля использования заклинания 'Огненные руны' введите: {FireRuneCommand}");
                 Console.WriteLine($"Для использования заклинания 'Меч духов' введите: {GhostSwordCommand}");
-                Console.WriteLine($"Для использования заклинания 'Магический щит' введите: {MagicShieldCommand}");
+                Console.WriteLine($"Для использования заклинания 'Магический щит' введите: {HealthRestoreCommand}");
                 Console.WriteLine($"Для использования заклинания 'Смертный приговор' введите: {DeathSentenceCommand}\n");
 
                 keyInput = Console.ReadLine();
@@ -49,7 +51,7 @@ namespace BossFight
                 {
                     case FireRuneCommand:
                         playerHealth -= minRuneDebuffValue;
-                        bossHealth = bossHealth - (minDamage + extraDamage);
+                        bossHealth -= minDamage + extraDamage;
                         Console.Write($"\nИспользовав заклинание 'Огненные руны', главный герой оставил боссу {bossHealth} здоровяь, получив {minRuneDebuffValue} урона.\n");
                         break;
 
@@ -59,11 +61,13 @@ namespace BossFight
                         Console.Write($"\nИспользовав заклинание 'Меч духов', главный герой, сойдясь в ближнем бою, оставил боссу {bossHealth} здоровья.\n");
                         break;
 
-                    case MagicShieldCommand:
-                        if (playerLuck == true && playerHealth <= maxPlayerHealth - healthRegenerationValue)
+                    case HealthRestoreCommand:
+                        if (havePlayerLuck == true && playerHealth <= maxPlayerHealth - healthRestoreValue)
                         {
-                            playerHealth += healthRegenerationValue;
-                            Console.Write($"\nУдачно укрывшись за щитом, главный герой восстанвил {healthRegenerationValue} здоровья.\n");
+                            playerHealth += healthRestoreValue;
+                            Console.Write($"\nУдачно укрывшись за щитом, главный герой восстанвил {healthRestoreValue} здоровья.\n");
+
+                            havePlayerLuck = false;
                         }
                         else
                         {
@@ -73,17 +77,21 @@ namespace BossFight
                         break;
 
                     case DeathSentenceCommand:
-                        if (playerLuck == true && playerHealth > 0 && bossHealth > 0)
+                        if (havePlayerLuck == true && playerHealth > 0 && bossHealth > 0)
                         {
                             bossHealth -= maxDamage;
                             Console.WriteLine($"\nБоссу был нанесён критический урон в количестве {maxDamage} единиц.\n");
+
+                            havePlayerLuck = true;
                         }
                         else
                         {
                             playerHealth -= maxDamage;
                             Console.Write($"\nГлавному герою был нанесён критический урон в количестве {maxDamage} единиц.\n");
+
+                            havePlayerLuck = true;
                         }
-                        break;
+                        break; 
 
                     default:
                         Console.WriteLine($"\nВведена не верная команда.\n");
