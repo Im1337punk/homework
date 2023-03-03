@@ -8,11 +8,12 @@ namespace BossFight
         {
             const string FireRuneCommand = "1";
             const string GhostSwordCommand = "2";
-            const string HealthRestoreCommand = "3"; //может быть использована только после использования чеетвёртого скилла
+            const string HealthRestoreCommand = "3";
             const string DeathSentenceCommand = "4";
 
             string keyInput = "";
             bool isFighting = true;
+            bool havePlayerLuck = false;
 
             Random random = new Random();
             int minBossHealth = 1000;
@@ -21,10 +22,7 @@ namespace BossFight
             int maxPlayerHealth = 1000;
             int bossHealth = random.Next(minBossHealth, maxBossHealth + 1);
             int playerHealth = random.Next(minPlayerHealth, maxPlayerHealth + 1);
-            int minRuneDebuffValue = 8;
-            int healthRestoreValue = 350;
-            bool havePlayerLuck = false;
-            int noDamageValue = 0;
+
             int minDamageValue = 15;
             int averageDamageValue = 470;
             int maxDamageValue = 1100;
@@ -33,10 +31,10 @@ namespace BossFight
 
             while (isFighting)
             {
-                int minDamage = random.Next(noDamageValue, minDamageValue + 1);
+                int minDamage = random.Next(0, minDamageValue + 1);
                 int averageDamage = random.Next(minDamageValue, averageDamageValue + 1);
                 int maxDamage = random.Next(averageDamageValue, maxDamageValue + 1);
-                int extraDamage = random.Next(noDamageValue, minDamageValue + 1);
+                int extraDamage = random.Next(0, minDamageValue + 1);
 
                 Console.WriteLine($"\nУ главного героя {playerHealth} здоровья. У босса {bossHealth} здоровья.\n");
 
@@ -50,6 +48,9 @@ namespace BossFight
                 switch (keyInput)
                 {
                     case FireRuneCommand:
+
+                        int minRuneDebuffValue = 8;
+
                         playerHealth -= minRuneDebuffValue;
                         bossHealth -= minDamage + extraDamage;
                         Console.Write($"\nИспользовав заклинание 'Огненные руны', главный герой оставил боссу {bossHealth} здоровяь, получив {minRuneDebuffValue} урона.\n");
@@ -62,6 +63,9 @@ namespace BossFight
                         break;
 
                     case HealthRestoreCommand:
+
+                        int healthRestoreValue = 350;
+
                         if (havePlayerLuck == true && playerHealth <= maxPlayerHealth - healthRestoreValue)
                         {
                             playerHealth += healthRestoreValue;
@@ -91,7 +95,7 @@ namespace BossFight
 
                             havePlayerLuck = true;
                         }
-                        break; 
+                        break;
 
                     default:
                         Console.WriteLine($"\nВведена не верная команда.\n");
