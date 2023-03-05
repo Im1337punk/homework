@@ -1,0 +1,55 @@
+using System;
+
+namespace MultidimensionalArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int secondStringSum = 0;
+            int firstColumnMultiplication = 1;
+
+            int stringAmount;
+            Console.WriteLine($"Введите колличество строк массива: ");
+            stringAmount = Convert.ToInt32(Console.ReadLine());
+            int columnAmount;
+            Console.WriteLine($"Введите колличество столбцов массива: ");
+            columnAmount = Convert.ToInt32(Console.ReadLine());
+
+            Console.Clear();
+            
+            Random random = new Random();
+
+            if (stringAmount >= 2 && columnAmount >= 2)
+            {
+                int[,] array = new int[stringAmount, columnAmount];
+               
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        array[i, j] = random.Next(0, 9);
+                        Console.Write($"{array[i, j]} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int i = 0; i < array.GetLength(1); i++)
+                {
+                    secondStringSum += array[1, i];
+                }
+
+                for (int i = 0; i < array.GetLength(0); i++)
+                {
+                    firstColumnMultiplication *= array[i, 0];
+                }
+
+                Console.WriteLine($"Сумма второй строки равна: {secondStringSum}. Произведение первого столбца равно: {firstColumnMultiplication}.");
+            }
+            else
+            {
+                Console.WriteLine($"Введено не верное количество строк или столбцов.");
+            }
+        }
+    }
+}
