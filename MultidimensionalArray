@@ -8,6 +8,12 @@ namespace MultidimensionalArray
         {
             int secondStringSum = 0;
             int firstColumnMultiplication = 1;
+            int minStringAmount = 2;
+            int minColumnAmount = 2;
+            int minArrayValue = 0;
+            int maxArrayValue = 9;
+            int stringNumber = 1;
+            int columnNumber = 0;
 
             int stringAmount;
             Console.WriteLine($"Введите колличество строк массива: ");
@@ -20,7 +26,7 @@ namespace MultidimensionalArray
             
             Random random = new Random();
 
-            if (stringAmount >= 2 && columnAmount >= 2)
+            if (stringAmount >= minStringAmount && columnAmount >= minColumnAmount)
             {
                 int[,] array = new int[stringAmount, columnAmount];
                
@@ -28,20 +34,21 @@ namespace MultidimensionalArray
                 {
                     for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        array[i, j] = random.Next(0, 9);
+                        array[i, j] = random.Next(minArrayValue, maxArrayValue);
                         Console.Write($"{array[i, j]} ");
                     }
+
                     Console.WriteLine();
                 }
 
                 for (int i = 0; i < array.GetLength(1); i++)
                 {
-                    secondStringSum += array[1, i];
+                    secondStringSum += array[stringNumber, i];
                 }
 
                 for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    firstColumnMultiplication *= array[i, 0];
+                    firstColumnMultiplication *= array[i, columnNumber];
                 }
 
                 Console.WriteLine($"Сумма второй строки равна: {secondStringSum}. Произведение первого столбца равно: {firstColumnMultiplication}.");
