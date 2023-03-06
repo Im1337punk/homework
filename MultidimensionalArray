@@ -6,8 +6,8 @@ namespace MultidimensionalArray
     {
         static void Main(string[] args)
         {
-            int secondStringSum = 0;
-            int firstColumnMultiplication = 1;
+            int stringSum = 0;
+            int columnMultiplication = 1;
             int minStringAmount = 2;
             int minColumnAmount = 2;
             int minArrayValue = 0;
@@ -43,15 +43,15 @@ namespace MultidimensionalArray
 
                 for (int i = 0; i < array.GetLength(1); i++)
                 {
-                    secondStringSum += array[stringNumber, i];
+                    stringSum += array[stringNumber, i];
                 }
 
                 for (int i = 0; i < array.GetLength(0); i++)
                 {
-                    firstColumnMultiplication *= array[i, columnNumber];
+                    columnMultiplication *= array[i, columnNumber];
                 }
 
-                Console.WriteLine($"Сумма второй строки равна: {secondStringSum}. Произведение первого столбца равно: {firstColumnMultiplication}.");
+                Console.WriteLine($"Сумма второй строки равна: {stringSum}. Произведение первого столбца равно: {columnMultiplication}.");
             }
             else
             {
