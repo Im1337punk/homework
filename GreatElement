@@ -1,0 +1,58 @@
+using System;
+
+namespace GreatElement
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] array = new int[10, 10];
+            int greatElement = int.MinValue;
+            int reaplacedValue = 0;
+
+            Random random = new Random();
+            int minArrayValue = 0;
+            int maxArrayValue = 9;
+
+            Console.WriteLine($"Исходная матрица:");
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] = random.Next(minArrayValue, maxArrayValue);
+                    Console.Write($"{array[i, j]} ");
+                }
+
+                Console.WriteLine();
+            }
+
+            foreach (int element in array)
+            {
+                if (element > greatElement)
+                {
+                    greatElement = element;
+                }
+            }
+
+            Console.WriteLine($"\nМаксимальный элемент матрицы равен: {greatElement}");
+
+            Console.WriteLine($"\nПолученная матрица:");
+            
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == greatElement)
+                    {
+                        array[i, j] = reaplacedValue;
+                    }
+
+                    Console.Write($"{array[i, j]} ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+}
