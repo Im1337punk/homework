@@ -1,0 +1,68 @@
+using System;
+
+namespace DynamicArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string SumCommand = "s";
+            const string ExitCommand = "x";
+
+            int[] numbers = new int[0];
+
+            string keyInput = "";
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.WriteLine($"Введите число, которое хотите добавить: ");
+
+                for (int i = 0; i < numbers.Length; i++)
+                {
+                    Console.Write($"{numbers[i]} ");
+                }
+
+                Console.WriteLine();
+
+                Console.WriteLine($"Для сложения всех введённых чисел нажмите клавишу: {SumCommand}");
+                Console.WriteLine($"Для выхода из программы нажмите клавишу: {ExitCommand}");
+
+                keyInput = Console.ReadLine();
+
+                if (keyInput == SumCommand)
+                {
+                    int sum = 0;
+
+                    for (int i = 0; i < numbers.Length; i++)
+                    {
+                        sum += numbers[i];
+                    }
+
+                    Console.WriteLine($"Сумма чисел равна {sum}");
+                }
+
+                else if (keyInput == ExitCommand)
+                {
+                    isOpen = false;
+                }
+
+                else
+                {
+                    int number = Convert.ToInt32(keyInput);
+
+                    int[] tempNumbers = new int[numbers.Length + 1];
+
+                    for (int i = 0; i < numbers.Length; i++)
+                    {
+                        tempNumbers[i] = numbers[i];
+                    }
+
+                    tempNumbers[tempNumbers.Length - 1] = number;
+
+                    numbers = tempNumbers;
+                }
+            }
+        }
+    }
+}
