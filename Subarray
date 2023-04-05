@@ -1,0 +1,47 @@
+using System;
+
+namespace Subarray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int arrayLength = 30;
+            int[] numbers = new int[arrayLength];
+            int repeatedNumber = 0;
+            int currentReplace = 1;
+            int maxReplace = 1;
+            int minValue = 1;
+
+            Random random = new Random();
+            int maxValue = 5;
+            int defaultValue = 1;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                numbers[i] = random.Next(minValue, maxValue + 1);
+                Console.Write($"{numbers[i]} ");
+            }
+
+            for (int i = 1; i < numbers.Length; i++)
+            {
+                if (numbers[i] == numbers[i - 1])
+                {
+                    currentReplace++;
+                }
+                else
+                {
+                    currentReplace = defaultValue;
+                }
+
+                if (currentReplace >= maxReplace)
+                {
+                    repeatedNumber = numbers[i];
+                    maxReplace = currentReplace;
+                }
+            }
+
+            Console.WriteLine($"\n{repeatedNumber} повторяется {maxReplace} раз.");
+        }
+    }
+}
