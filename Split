@@ -1,0 +1,19 @@
+using System;
+
+namespace Split
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string sentence = "Дана строка с текстом.";
+
+            char[] delimiters = new char[] { ' ', '.' };
+
+            foreach (var word in sentence.Split(delimiters, StringSplitOptions.RemoveEmptyEntries))
+            {
+                Console.WriteLine(word);
+            }
+        }
+    }
+}
