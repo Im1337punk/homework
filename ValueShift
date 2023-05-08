@@ -1,0 +1,40 @@
+using System;
+
+namespace ValueShift
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 1, 2, 3, 4 };
+            int tempValue;
+            int shiftCount;
+
+            Console.Write($"Введите количество сдвигов велво: ");
+            shiftCount = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                Console.Write(numbers[i] + " ");
+            }
+
+            for (int j = 0; j < shiftCount; j++)
+            {
+                for (int i = 0; i < numbers.Length - 1; i++)
+                {
+                    tempValue = numbers[i + 1];
+                    numbers[i + 1] = numbers[i];
+                    numbers[i] = tempValue;
+
+                }
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                Console.Write(numbers[i] + " ");
+            }
+        }
+    }
+}
