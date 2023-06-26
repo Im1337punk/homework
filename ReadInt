@@ -1,0 +1,36 @@
+namespace ReadInt
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = GetNumber();
+
+            Console.WriteLine($"Вы ввели число {number}");
+        }
+
+        static int GetNumber()
+        {
+            int number = 0;
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.Write($"Введите число: ");
+
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out number))
+                {
+                    isOpen = false;
+                }
+                else
+                {
+                    Console.WriteLine($"Ошибка. Введите число.");
+                }
+            }
+
+            return number;
+        }
+    }
+}
