@@ -1,0 +1,44 @@
+using System;
+
+namespace Shuffle
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 1, 2, 3, 4 };
+
+            DrawArray(numbers);
+            ShuffleArray(numbers);
+        }
+
+        static void ShuffleArray(int[] numbers)
+        {
+            Console.Write($"\nПеремешанный массив: ");
+
+            Random randomNumber = new Random();
+            int randomIndex;
+            int indexNumber;
+
+            for (int i = numbers.Length - 1; i >= 0; i--)
+            {
+                randomIndex = randomNumber.Next(i);
+                indexNumber = numbers[randomIndex];
+                numbers[randomIndex] = numbers[i];
+                numbers[i] = indexNumber;
+
+                Console.Write($"{numbers[i]} ");
+            }
+        }
+
+        static void DrawArray(int[] numbers)
+        {
+            Console.Write($"Исходный массив:");
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                Console.Write($"{numbers[i]} ");
+            }
+        }
+    }
+}
