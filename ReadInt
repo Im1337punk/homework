@@ -1,3 +1,5 @@
+using System;
+
 namespace ReadInt
 {
     class Program
@@ -12,22 +14,10 @@ namespace ReadInt
         static int GetNumber()
         {
             int number = 0;
-            bool isOpen = true;
 
-            while (isOpen)
+            while (int.TryParse(Console.ReadLine(), out number) == false)
             {
                 Console.Write($"Введите число: ");
-
-                string userInput = Console.ReadLine();
-
-                if (int.TryParse(userInput, out number))
-                {
-                    isOpen = false;
-                }
-                else
-                {
-                    Console.WriteLine($"Ошибка. Введите число.");
-                }
             }
 
             return number;
