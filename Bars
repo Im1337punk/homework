@@ -6,54 +6,82 @@ namespace Bars
     {
         static void Main(string[] args)
         {
-            int health = 7;
-            int maxHealth = 10;
-            int stamina = 3;
-            int maxStamina = 10;
-            int mana = 10;
-            int maxMana = 10;
+            int healthValue;
+            int staminaValue;
+            int manaValue;
 
-            while (true)
+            string message = "Введите число, на которое изменится количество: ";
+            bool isOpen = true;
+
+            while (isOpen)
             {
-                DrawBar(health, maxHealth, ConsoleColor.Red, 0);
-                DrawBar(mana, maxMana, ConsoleColor.Blue, 1);
-                DrawBar(stamina, maxStamina, ConsoleColor.Green, 2);
+                Console.WriteLine($"{message} здовровья");
+                healthValue = int.Parse(Console.ReadLine());
+                Console.WriteLine($"{message} маны");
+                manaValue = int.Parse(Console.ReadLine());
+                Console.WriteLine($"{message} выносливости");
+                staminaValue = int.Parse(Console.ReadLine());
 
-                Console.SetCursorPosition(0, 5);
-                Console.Write("Введите число, на которое изменится количество жизней: ");
-                health += Convert.ToInt32(Console.ReadLine());
-                Console.Write("Введите число, на которое изменится количество маны: "); ;
-                mana += Convert.ToInt32(Console.ReadLine());
-                Console.Write("Введите число, на которое изменится количество очков выносливости: ");
-                stamina += Convert.ToInt32(Console.ReadLine());
+                int yCursorPosition = 6;
+
+                DrawBar(healthValue, ConsoleColor.Red, yCursorPosition++);
+                DrawBar(manaValue, ConsoleColor.Blue, yCursorPosition++);
+                DrawBar(staminaValue, ConsoleColor.Green, yCursorPosition++);
+
+                Console.ReadKey();
+                Console.Clear();
             }
         }
 
-        static void DrawBar(int value, int maxValue, ConsoleColor color, int position)
+        static void DrawBar(float value, ConsoleColor color, int yPosition)
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
 
-            string bar = "";
+            int minBarValue = 0;
+            int maxBarValue = 100;
+            
+            char filledCellSymbol = '#';
+            char emptyCellSymbol = '_';
+            char openBracket = '[';
+            char closeBracket = ']';
 
-            for (int i = 0; i < value; i++)
+            if (value < minBarValue)
             {
-                bar += "#";
+                value = minBarValue;
+            }
+            else if (value >= maxBarValue)
+            {
+                value = maxBarValue;
             }
 
-            Console.SetCursorPosition(0, position);
-            Console.Write('[');
+            string bar = string.Empty;
+
+            int barLength = 10;
+            int coeffitientDivider = 100;
+
+            float percentToValue = value / coeffitientDivider * barLength;
+            int lastFilledCellIndex = (int)Math.Round(percentToValue);
+            FillBar(0, lastFilledCellIndex, filledCellSymbol, ref bar);
+
+            Console.SetCursorPosition(0, yPosition);
+            Console.Write(openBracket);
             Console.BackgroundColor = color;
             Console.Write(bar);
             Console.BackgroundColor = defaultColor;
 
-            bar = "";
+            bar = string.Empty;
 
-            for (int i = value; i < maxValue; i++)
+            FillBar(lastFilledCellIndex, barLength, emptyCellSymbol, ref bar);
+
+            Console.Write(bar + closeBracket);
+        }
+        
+        private static void FillBar(int startIndex, int lastIndex, char symbol, ref string bar)
+        {
+            for (int i = startIndex; i < lastIndex; i++)
             {
-                bar += "_";
+                bar += symbol;
             }
-
-            Console.Write(bar + ']');
         }
     }
 }
