@@ -10,6 +10,8 @@ namespace Shuffle
 
             DrawArray(numbers);
             ShuffleArray(numbers);
+
+            DrawArray(numbers);
         }
 
         static void ShuffleArray(int[] numbers)
@@ -26,8 +28,6 @@ namespace Shuffle
                 indexNumber = numbers[randomIndex];
                 numbers[randomIndex] = numbers[i];
                 numbers[i] = indexNumber;
-
-                Console.Write($"{numbers[i]} ");
             }
         }
 
