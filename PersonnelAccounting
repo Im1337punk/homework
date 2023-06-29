@@ -1,0 +1,143 @@
+using System;
+
+namespace PersonnelAccounting
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string CommandAddDossier = "1";
+            const string CommandShowAllDosiers = "2";
+            const string CommandRemoveDossier = "3";
+            const string CommandSearchDossier = "4";
+            const string CommandExit = "5";
+
+            string[] fullNames = new string[] { "Иванов Иван Иванович", "Васильев Василий Васильевич", "Аааа Аааа Аааа" };
+            string[] post = new string[] { "Директор", "Секретарь", "Техничка" };
+
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.WriteLine($"Нажмите {CommandAddDossier}, чтобы добавить досье.");
+                Console.WriteLine($"Нажмите {CommandShowAllDosiers}, чтобы показать все досье.");
+                Console.WriteLine($"Нажмите {CommandRemoveDossier}, чтобы удалить досье.");
+                Console.WriteLine($"Нажмите {CommandSearchDossier}, чтобы найти досье по фамилии.");
+                Console.WriteLine($"Нажмите {CommandExit} для выхода из программы");
+
+                Console.Write("\nВведите пункт меню: ");
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case CommandAddDossier:
+                        AddDossier(ref fullNames, ref post);
+                        break;
+
+                    case CommandShowAllDosiers:
+                        ShowAllDossiers(fullNames, post);
+                        break;
+
+                    case CommandRemoveDossier:
+                        RemoveDossier(ref fullNames, ref post);
+                        break;
+
+                    case CommandSearchDossier:
+                        SearchDossier(fullNames, post);
+                        break;
+
+                    case CommandExit:
+                        isOpen = false;
+                        break;
+                }
+
+                Console.WriteLine("\nНажмите любую клавишу.");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        private static void SearchDossier(string[] fullNames, string[] post)
+        {
+            Console.WriteLine($"Введите необходимую фамилию: ");
+            string inputSurname = Console.ReadLine();
+
+            for (int i = 0; i < fullNames.Length; i++)
+            {
+                string fullName = fullNames[i];
+                string surname = fullName.Split()[0];
+
+                if (surname == inputSurname)
+                {
+                    Console.WriteLine($"{i + 1} - {fullNames[i]} - {post[i]}");
+                }
+            }
+        }
+
+        private static void RemoveDossier(ref string[] fullNames, ref string[] post)
+        {
+            Console.WriteLine($"\nВведите номер строки, которую хотите удалить: ");
+            int indexToDelete = Convert.ToInt32(Console.ReadLine()) - 1;
+
+            if (indexToDelete >= 0 && indexToDelete < fullNames.Length)
+            {
+                ReduceArray(ref post, indexToDelete);
+                ReduceArray(ref fullNames, indexToDelete);
+            }
+
+            ShowAllDossiers(fullNames, post);
+        }
+
+        private static void AddDossier(ref string[] fullNames, ref string[] post)
+        {
+            Console.WriteLine($"\nВведите ФИО: ");
+            IncreaseArray(ref fullNames);
+
+            Console.WriteLine($"\nВведите должность: ");
+            IncreaseArray(ref post);
+        }
+
+        private static void ReduceArray(ref string[] array, int indexToDelete)
+        {
+            string[] temp = new string[array.Length - 1];
+
+            for (int i = 0; i < indexToDelete; i++)
+            {
+                temp[i] = array[i];
+            }
+
+            indexToDelete++;
+
+            for (int i = indexToDelete; i < array.Length; i++)
+            {
+                temp[i - 1] = array[i];
+            }
+
+            array = temp;
+        }
+
+        private static void ShowAllDossiers(string[] fullName, string[] post)
+        {
+            int number;
+
+            for (int i = 0; i < fullName.Length; i++)
+            {
+                number = i + 1;
+                Console.WriteLine($"{number} {fullName[i]} - {post[i]}");
+            }
+        }
+
+        private static void IncreaseArray(ref string[] array)
+        {
+            string[] tempArray = new string[array.Length + 1];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                tempArray[i] = array[i];
+            }
+
+            tempArray[tempArray.Length - 1] = Console.ReadLine();
+            array = tempArray;
+        }
+    }
+}
