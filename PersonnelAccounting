@@ -96,13 +96,13 @@ namespace PersonnelAccounting
             ShowAllDossiers(fullNames, posts);
         }
 
-        private static void AddDossier(ref string[] fullNames, ref string[] post)
+        private static void AddDossier(ref string[] fullNames, ref string[] posts)
         {
             Console.WriteLine($"\nВведите ФИО: ");
-            IncreaseArray(ref fullNames);
+            fullNames = IncreaseArray(fullNames);
 
             Console.WriteLine($"\nВведите должность: ");
-            IncreaseArray(ref post);
+            posts = IncreaseArray(posts);
         }
 
         private static string[] ReduceArray(string[] array, int indexToDelete)
@@ -122,18 +122,18 @@ namespace PersonnelAccounting
             return tempArray;
         }
 
-        private static void ShowAllDossiers(string[] fullName, string[] post)
+        private static void ShowAllDossiers(string[] fullName, string[] posts)
         {
             int number;
 
             for (int i = 0; i < fullName.Length; i++)
             {
                 number = i + 1;
-                Console.WriteLine($"{number} {fullName[i]} - {post[i]}");
+                Console.WriteLine($"{number} {fullName[i]} - {posts[i]}");
             }
         }
 
-        private static void IncreaseArray(ref string[] array)
+        private static string[] IncreaseArray(string[] array)
         {
             string[] tempArray = new string[array.Length + 1];
 
@@ -143,7 +143,7 @@ namespace PersonnelAccounting
             }
 
             tempArray[tempArray.Length - 1] = Console.ReadLine();
-            array = tempArray;
+            return tempArray;
         }
     }
 }
