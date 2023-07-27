@@ -1,0 +1,119 @@
+using System;
+using System.IO;
+
+namespace BraveNewWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.CursorVisible = false;
+
+            int playerAxisX;
+            int playerAxisY;
+            int playerDirectionX = 0;
+            int playerDirectionY = 0;
+
+            char finishLine = '-';
+
+            bool isPlaying = true;
+
+            char[,] map = ReadMap("map", out playerAxisX, out playerAxisY);
+
+            DrawMap(map);
+            while (isPlaying)
+            {
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    ChangeDirection(key, ref playerDirectionX, ref playerDirectionY);
+                    if (map[playerAxisX + playerDirectionX, playerAxisY + playerDirectionY] != '#')
+                    {
+                        MoveCharacter(ref playerAxisX, ref playerAxisY, playerDirectionX, playerDirectionY);
+
+                        if (map[playerAxisX, playerAxisY] == finishLine)
+                        {
+                            Console.SetCursorPosition(0, 20);
+                            Console.WriteLine($"Вы прошли игру 'Лабиринт'!");
+                            isPlaying = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        static void ChangeDirection(ConsoleKeyInfo key, ref int playerDirectionX, ref int playerDirectionY)
+        {
+            switch (key.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    playerDirectionX = 0;
+                    playerDirectionY = -1;
+                    break;
+                case ConsoleKey.UpArrow:
+                    playerDirectionX = -1;
+                    playerDirectionY = 0;
+                    break;
+                case ConsoleKey.RightArrow:
+                    playerDirectionX = 0;
+                    playerDirectionY = 1;
+                    break;
+                case ConsoleKey.DownArrow:
+                    playerDirectionX = 1;
+                    playerDirectionY = 0;
+                    break;
+            }
+        }
+
+        static void MoveCharacter(ref int playerAxisX, ref int playerAxisY, int playerDirectionX, int playerDirectionY)
+        {
+            Console.SetCursorPosition(playerAxisY, playerAxisX);
+            Console.Write(" ");
+
+            playerAxisX += playerDirectionX;
+            playerAxisY += playerDirectionY;
+
+            Console.SetCursorPosition(playerAxisY, playerAxisX);
+            Console.Write('+');
+        }
+
+        static void DrawMap(char[,] map)
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        static char[,] ReadMap(string mapName, out int playerDirectionX, out int playerDirectionY)
+        {
+            playerDirectionX = 0;
+            playerDirectionY = 0;
+
+            string[] newFile = File.ReadAllLines($"maps/{mapName}.txt");
+            char[,] map = new char[newFile.Length, newFile[0].Length];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    map[i, j] = newFile[i][j];
+
+                    if (map[i, j] == '+')
+                    {
+                        playerDirectionX = i;
+                        playerDirectionY = j;
+                    }
+                }
+            }
+
+            return map;
+        }
+    }
+}
