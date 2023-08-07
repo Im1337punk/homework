@@ -9,30 +9,32 @@ namespace BraveNewWorld
         {
             Console.CursorVisible = false;
 
-            int playerAxisX;
-            int playerAxisY;
+            int playerPositionX;
+            int playerPositionY;
             int playerDirectionX = 0;
             int playerDirectionY = 0;
 
             char finishLine = '-';
+            char wallSymbol = '#';
 
             bool isPlaying = true;
 
-            char[,] map = ReadMap("map", out playerAxisX, out playerAxisY);
+            char[,] map = ReadMap("map", out playerPositionX, out playerPositionY);
 
             DrawMap(map);
+
             while (isPlaying)
             {
                 if (Console.KeyAvailable)
                 {
-                    ConsoleKeyInfo key = Console.ReadKey(true);
 
-                    ChangeDirection(key, ref playerDirectionX, ref playerDirectionY);
-                    if (map[playerAxisX + playerDirectionX, playerAxisY + playerDirectionY] != '#')
+                    ChangeDirection(ref playerDirectionX, ref playerDirectionY);
+
+                    if (map[playerPositionX + playerDirectionX, playerPositionY + playerDirectionY] != wallSymbol)
                     {
-                        MoveCharacter(ref playerAxisX, ref playerAxisY, playerDirectionX, playerDirectionY);
+                        MoveCharacter(ref playerPositionX, ref playerPositionY, playerDirectionX, playerDirectionY);
 
-                        if (map[playerAxisX, playerAxisY] == finishLine)
+                        if (map[playerPositionX, playerPositionY] == finishLine)
                         {
                             Console.SetCursorPosition(0, 20);
                             Console.WriteLine($"Вы прошли игру 'Лабиринт'!");
@@ -43,39 +45,52 @@ namespace BraveNewWorld
             }
         }
 
-        static void ChangeDirection(ConsoleKeyInfo key, ref int playerDirectionX, ref int playerDirectionY)
+        static void ChangeDirection(ref int playerDirectionX, ref int playerDirectionY)
         {
-            switch (key.Key)
+            const ConsoleKey MoveUpCommand = ConsoleKey.W;
+            const ConsoleKey MoveDownCommand = ConsoleKey.S;
+            const ConsoleKey MoveLeftCommand = ConsoleKey.A;
+            const ConsoleKey MoveRightCommand = ConsoleKey.D;
+
+            ConsoleKeyInfo keyInput = Console.ReadKey(true);
+
+            switch (keyInput.Key)
             {
-                case ConsoleKey.LeftArrow:
+                case MoveLeftCommand:
                     playerDirectionX = 0;
                     playerDirectionY = -1;
                     break;
-                case ConsoleKey.UpArrow:
+
+                case MoveUpCommand:
                     playerDirectionX = -1;
                     playerDirectionY = 0;
                     break;
-                case ConsoleKey.RightArrow:
+
+                case MoveRightCommand:
                     playerDirectionX = 0;
                     playerDirectionY = 1;
                     break;
-                case ConsoleKey.DownArrow:
+
+                case MoveDownCommand:
                     playerDirectionX = 1;
                     playerDirectionY = 0;
                     break;
             }
         }
 
-        static void MoveCharacter(ref int playerAxisX, ref int playerAxisY, int playerDirectionX, int playerDirectionY)
+        static void MoveCharacter(ref int playerPositionX, ref int playerPositionY, int playerDirectionX, int playerDirectionY)
         {
-            Console.SetCursorPosition(playerAxisY, playerAxisX);
-            Console.Write(" ");
+            char player = '+';
+            char emptyCell = ' ';
 
-            playerAxisX += playerDirectionX;
-            playerAxisY += playerDirectionY;
+            Console.SetCursorPosition(playerPositionY, playerPositionX);
+            Console.Write(emptyCell);
 
-            Console.SetCursorPosition(playerAxisY, playerAxisX);
-            Console.Write('+');
+            playerPositionX += playerDirectionX;
+            playerPositionY += playerDirectionY;
+
+            Console.SetCursorPosition(playerPositionY, playerPositionX);
+            Console.Write(player);
         }
 
         static void DrawMap(char[,] map)
@@ -93,6 +108,8 @@ namespace BraveNewWorld
 
         static char[,] ReadMap(string mapName, out int playerDirectionX, out int playerDirectionY)
         {
+            char player = '+';
+
             playerDirectionX = 0;
             playerDirectionY = 0;
 
@@ -105,7 +122,7 @@ namespace BraveNewWorld
                 {
                     map[i, j] = newFile[i][j];
 
-                    if (map[i, j] == '+')
+                    if (map[i, j] == player)
                     {
                         playerDirectionX = i;
                         playerDirectionY = j;
