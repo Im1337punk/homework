@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+
+namespace Dictionary
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string wordProgramming = "Программирование";
+            string definitionOfProgramming = "Процесс и искусство создания компьютерных программ с помощью языков программирования.";
+            string wordDictionary = "Словарь";
+            string definitionOfDictionary = "Книга, содержащая собрание слов.";
+
+            string userInput = "";
+
+            Dictionary<string, string> definitions = new Dictionary<string, string>();
+
+            definitions.Add(wordProgramming, definitionOfProgramming);
+            definitions.Add(wordDictionary, definitionOfDictionary);
+
+            Console.WriteLine($"Введите слово из првеведённых, определение которого хотите узнать: {wordProgramming}, {wordDictionary}");
+
+            userInput = Console.ReadLine();
+
+            Console.Clear();
+
+            if (userInput == wordProgramming)
+            {
+                Console.WriteLine(definitionOfProgramming);
+            }
+            else if (userInput == wordDictionary)
+            {
+                Console.WriteLine(definitionOfDictionary);
+            }
+            else
+            {
+                Console.WriteLine($"Такого слова нет в списке.");
+            }
+        }
+    }
+}
