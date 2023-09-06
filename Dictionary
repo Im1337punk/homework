@@ -7,31 +7,21 @@ namespace Dictionary
     {
         static void Main(string[] args)
         {
-            string wordProgramming = "Программирование";
-            string definitionOfProgramming = "Процесс и искусство создания компьютерных программ с помощью языков программирования.";
-            string wordDictionary = "Словарь";
-            string definitionOfDictionary = "Книга, содержащая собрание слов.";
+            Dictionary<string, string> definitions = new Dictionary<string, string>()
+            {
+                { "программирование", "Процесс и искусство создания компьютерных программ с помощью языков программирования."},
+                { "словарь", "Книга, содержащая собрание слов."}
+            };
+            
+            Console.WriteLine($"Введите слово из првеведённых, определение которого хотите узнать: программирование, словарь.");
 
-            string userInput = "";
-
-            Dictionary<string, string> definitions = new Dictionary<string, string>();
-
-            definitions.Add(wordProgramming, definitionOfProgramming);
-            definitions.Add(wordDictionary, definitionOfDictionary);
-
-            Console.WriteLine($"Введите слово из првеведённых, определение которого хотите узнать: {wordProgramming}, {wordDictionary}");
-
-            userInput = Console.ReadLine();
+            string userInput = Console.ReadLine();
 
             Console.Clear();
 
-            if (userInput == wordProgramming)
+            if (definitions.ContainsKey(userInput))
             {
-                Console.WriteLine(definitionOfProgramming);
-            }
-            else if (userInput == wordDictionary)
-            {
-                Console.WriteLine(definitionOfDictionary);
+                Console.WriteLine(definitions[userInput]);
             }
             else
             {
