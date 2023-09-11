@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+
+namespace ShopQueue
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<int> productsCost = new Queue<int>();
+
+            productsCost.Enqueue(10);
+            productsCost.Enqueue(45);
+            productsCost.Enqueue(40);
+            productsCost.Enqueue(5);
+
+            int sumOfAllProducts = 0;
+
+            while (productsCost.Count > 0)
+            {
+                Console.Clear();
+
+                int productCost = productsCost.Dequeue();
+                sumOfAllProducts += productCost;
+
+                Console.WriteLine($"Сумма товаров покупателя составляет: {productCost}.");
+                Console.WriteLine($"Сумма товаров всех покупателей составляет: {sumOfAllProducts}");
+                Console.ReadKey();
+            }
+        }
+    }
+}
