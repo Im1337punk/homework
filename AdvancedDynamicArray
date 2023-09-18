@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+
+namespace DynamicArrayAdvanced
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string SumCommand = "s";
+            const string ExitCommand = "x";
+
+            List<int> numbers = new List<int>();
+
+            string userInput = "";
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                for (int i = 0; i < numbers.Count; i++)
+                {
+                    Console.Write($"{numbers[i]} ");
+                }
+                Console.WriteLine($"\nДля сложения всех введённых чисел нажмите клавишу: {SumCommand}");
+                Console.WriteLine($"Для выхода из программы нажмите клавишу: {ExitCommand}");
+                Console.Write($"Введите число или желаемую операцию: ");
+
+                userInput = Console.ReadLine();
+
+                if (userInput == SumCommand)
+                {
+                    int sum = 0;
+
+                    for (int i = 0; i < numbers.Count; i++)
+                    {
+                        sum += numbers[i];
+                    }
+
+                    Console.WriteLine($"\nСумма чисел равна: {sum}\n");
+                }
+                else if (userInput == ExitCommand)
+                {
+                    isOpen = false;
+                }
+                else
+                {
+                    numbers.Add(ReadInt(userInput));
+                }
+            }
+        }
+
+        static int ReadInt(string userInput)
+        {
+            bool numberCheck = int.TryParse(userInput, out int value);
+
+            while (numberCheck == false)
+            {
+                Console.WriteLine($"Не верный ввод.");
+                Console.Write($"Введите число: ");
+                numberCheck = int.TryParse(Console.ReadLine(), out value);
+            }
+
+            return value;
+        }
+    }
+}
