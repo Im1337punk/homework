@@ -43,7 +43,7 @@ namespace DynamicArrayAdvanced
             }
         }
 
-        private static void TryAddNumber(List<int> numbers, string userInput)
+        static void TryAddNumber(List<int> numbers, string userInput)
         {
             if (int.TryParse(userInput, out int value))
             {
