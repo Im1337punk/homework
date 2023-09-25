@@ -21,22 +21,16 @@ namespace DynamicArrayAdvanced
                 {
                     Console.Write($"{numbers[i]} ");
                 }
+
                 Console.WriteLine($"\nДля сложения всех введённых чисел нажмите клавишу: {SumCommand}");
                 Console.WriteLine($"Для выхода из программы нажмите клавишу: {ExitCommand}");
                 Console.Write($"Введите число или желаемую операцию: ");
 
-                userInput = Console.ReadLine();
+                userInput = Console.ReadLine().ToLower();
 
                 if (userInput == SumCommand)
                 {
-                    int sum = 0;
-
-                    for (int i = 0; i < numbers.Count; i++)
-                    {
-                        sum += numbers[i];
-                    }
-
-                    Console.WriteLine($"\nСумма чисел равна: {sum}\n");
+                    Sum(numbers);
                 }
                 else if (userInput == ExitCommand)
                 {
@@ -44,23 +38,29 @@ namespace DynamicArrayAdvanced
                 }
                 else
                 {
-                    numbers.Add(ReadInt(userInput));
+                    TryAddNumber(numbers, userInput);
                 }
             }
         }
 
-        static int ReadInt(string userInput)
+        private static void TryAddNumber(List<int> numbers, string userInput)
         {
-            bool numberCheck = int.TryParse(userInput, out int value);
-
-            while (numberCheck == false)
+            if (int.TryParse(userInput, out int value))
             {
-                Console.WriteLine($"Не верный ввод.");
-                Console.Write($"Введите число: ");
-                numberCheck = int.TryParse(Console.ReadLine(), out value);
+                numbers.Add(value);
+            }
+        }
+
+        static void Sum(List<int> numbers)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                sum += numbers[i];
             }
 
-            return value;
+            Console.WriteLine($"\nСумма чисел равна: {sum}\n");
         }
     }
 }
