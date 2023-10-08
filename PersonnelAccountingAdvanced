@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+
+namespace PersonnelAccountingAdvanced
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const int CommandAddDossier = 1;
+            const int CommandShowAllDosiers = 2;
+            const int CommandRemoveDossier = 3;
+            const int CommandExit = 4;
+
+            List<string> fullNames = new List<string>();
+            List<string> posts = new List<string>();
+
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.WriteLine($"\nНажмите {CommandAddDossier}, чтобы добавить досье.");
+                Console.WriteLine($"Нажмите {CommandShowAllDosiers}, чтобы показать все досье.");
+                Console.WriteLine($"Нажмите {CommandRemoveDossier}, чтобы удалить досье.");
+                Console.WriteLine($"Нажмите {CommandExit} для выхода из программы.\n");
+
+                Console.Write("\nВведите пункт меню: ");
+                string userInput = Console.ReadLine();
+                int number;
+
+                if (int.TryParse(userInput, out number))
+                {
+                    switch (number)
+                    {
+                        case CommandAddDossier:
+                            AddDossier(fullNames, posts);
+                            break;
+
+                        case CommandShowAllDosiers:
+                            ShowAllDossiers(fullNames, posts);
+                            break;
+
+                        case CommandRemoveDossier:
+                            RemoveDossier(fullNames, posts);
+                            break;
+
+                        case CommandExit:
+                            isOpen = false;
+                            break;
+                    }
+                }
+            }
+        }
+        private static void AddDossier(List<string> fullNames, List<string> posts)
+        {
+            Console.WriteLine($"\nВведите ФИО: ");
+            string userInputKey = Console.ReadLine();
+
+            Console.WriteLine($"\nВведите должность: ");
+            string userInputValue = Console.ReadLine();
+
+            fullNames.Add(userInputKey);
+            posts.Add(userInputValue);
+        }
+
+        private static void ShowAllDossiers(List<string> fullName, List<string> posts)
+        {
+            for (int i = 0; i < fullName.Count; i++)
+            {
+                Console.WriteLine($"{i + 1} - {fullName[i]} - {posts[i]}");
+            }
+        }
+
+        private static void RemoveDossier(List<string> fullNames, List<string> posts)
+        {
+            Console.WriteLine($"\nВведите номер строки, которую хотите удалить: ");
+
+            if (int.TryParse(Console.ReadLine(),out int indexToDelete) && indexToDelete - 1 >= 0 && indexToDelete < fullNames.Count)
+            {
+                fullNames.RemoveAt(indexToDelete - 1);
+                posts.RemoveAt(indexToDelete - 1);
+            }
+            else
+            {
+                Console.Write("Неверный ввод.\n");
+            }
+        }
+    }
+}
