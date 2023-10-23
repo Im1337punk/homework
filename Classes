@@ -1,0 +1,46 @@
+using System;
+
+namespace Classes
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Player[] players = { new Player(100, 80, "Паладин"), new Player(70, 50, "Лучник"), new Player(120, 15, "Маг") };
+
+            bool isOpen = true;
+
+            while (isOpen)
+            {
+                Console.WriteLine($"Список игроков: \n");
+                {
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        players[i].ShowStats();
+                    }
+
+                    Console.ReadKey();
+                }
+            }
+        }
+    }
+
+    class Player
+    {
+        private int _health;
+        private int _armor;
+        private string _vocation;
+
+        public Player(int health, int armor, string vocation)
+        {
+            _health = health;
+            _armor = armor;
+            _vocation = vocation;
+        }
+
+        public void ShowStats()
+        {
+            Console.WriteLine($"Игрок {_vocation} имеет {_health} здоровья и {_armor} брони");
+        }
+    }
+}
