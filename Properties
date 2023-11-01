@@ -1,0 +1,37 @@
+using System;
+
+namespace Properties
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Renderer renderer = new Renderer();
+            Player player = new Player(8, 6);
+
+            renderer.DrawPlayer(player.AxisX, player.AxisY);
+        }
+    }
+
+    class Renderer
+    {
+        public void DrawPlayer(int positionX, int positionY, char player = '@')
+        {
+            Console.SetCursorPosition(positionX, positionY);
+            Console.WriteLine(player);
+        }
+    }
+
+    class Player
+    {
+
+        public int AxisX { get; private set; }
+
+        public int AxisY { get; private set; }
+        public Player(int x, int y)
+        {
+            AxisX = x;
+            AxisY = y;
+        }
+    }
+}
