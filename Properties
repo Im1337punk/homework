@@ -15,23 +15,22 @@ namespace Properties
 
     class Renderer
     {
-        public void DrawPlayer(int positionX, int positionY, char player = '@')
+        public void DrawPlayer(int positionX, int positionY, char playerSymbol = '@')
         {
             Console.SetCursorPosition(positionX, positionY);
-            Console.WriteLine(player);
+            Console.WriteLine(playerSymbol);
         }
     }
 
     class Player
     {
-
-        public int AxisX { get; private set; }
-
-        public int AxisY { get; private set; }
         public Player(int x, int y)
         {
             AxisX = x;
             AxisY = y;
         }
+
+        public int AxisX { get; private set; }
+        public int AxisY { get; private set; }
     }
 }
