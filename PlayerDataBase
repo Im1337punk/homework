@@ -1,150 +1,165 @@
 using System;
 using System.Collections.Generic;
 
-namespace PlayerDataBase
+namespace Player_Database
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            DataBase dataBase = new DataBase();
+            const string CommandAddPlayer = "1";
+            const string CommandRemovePlayer = "2";
+            const string CommandShowInfo = "3";
+            const string CommandBanPlayer = "4";
+            const string CommandUnbanPlayer = "5";
 
             bool isOpen = true;
-            int userInput;
+            Database database = new Database();
 
             while (isOpen)
             {
-                Console.WriteLine("Для добваления игрока нажмите клавишу: 1" +
-                    "\nДля удаления игрока нажмите клавишу: 2" +
-                    "\nДля выведения списка всех игроков нажмите клавишу: 3" +
-                    "\nДля внесения игрока в бан лист нажмите клавишу: 4" +
-                    "\nДля удаления игрока из бан листа нажмите клавишу: 5" +
-                    "\nДля выведения бан листа нажмите клавишу: 6");
+                Console.WriteLine($"\nДля добавления игрока введите: {CommandAddPlayer}." +
+                    $"\nДля удаления игрока введите: {CommandRemovePlayer}." +
+                    $"\nДля выведения списка игроков введите: {CommandShowInfo}." +
+                    $"\nДля внесения игрока в бан листы введите: {CommandBanPlayer}." +
+                    $"\nДля вынесения игрока из бан листа введите: {CommandUnbanPlayer}.");
 
-                switch (userInput = Convert.ToInt32(Console.ReadLine()))
+                string keyInput = Console.ReadLine();
+
+                switch (keyInput)
                 {
-                    case 1:
-                        dataBase.AddPlayer();
+                    case CommandAddPlayer:
+                        database.AddPlayer();
                         break;
-                    case 2:
-                        dataBase.RemovePlayer();
+                    case CommandRemovePlayer:
+                        database.RemovePlayer();
                         break;
-                    case 3:
-                        dataBase.ShowAllPlayers();
+                    case CommandShowInfo:
+                        database.ShowInfo();
                         break;
-                    case 4:
-                        dataBase.BanPlayer();
+                    case CommandBanPlayer:
+                        database.BanPlayer();
                         break;
-                    case 5:
-                        dataBase.UnbanPlayer();
+                    case CommandUnbanPlayer:
+                        database.UnbanPlayer();
                         break;
-                    case 6:
-                        dataBase.ShowAllBannedPlayers();
-                        break;
-                }
-
-                Console.ReadKey();
-                Console.Clear();
-            }
-        }
-    }
-
-    class DataBase
-    {
-        List<Player> players = new List<Player>();
-        List<Player> bannedPlayers = new List<Player>();
-
-        public void AddPlayer()
-        {
-            Console.WriteLine($"Введите номер, под которым хотите добавить нового игрока: ");
-            int playerID = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"Введите имя игрока: ");
-            string playerName = Console.ReadLine();
-            Console.WriteLine($"Введите уровень игрока: ");
-            int playerLevel = Convert.ToInt32(Console.ReadLine());
-
-            Player player = new Player(playerID, playerName, playerLevel);
-            players.Add(player);
-        }
-
-        public void RemovePlayer()
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                players.RemoveAt(i);
-            }
-        }
-
-        public void ShowAllPlayers()
-        {
-            foreach (var player in players)
-            {
-                player.ShowInfo();
-            }
-        }
-
-        public void ShowAllBannedPlayers()
-        {
-            foreach (var player in bannedPlayers)
-            {
-                player.ShowInfo();
-            }
-        }
-
-        public void BanPlayer()
-        {
-            Console.WriteLine($"Введите номер игрока, которого необходимо забанить: ");
-            int banPlayerID = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (banPlayerID == players[i].PlayerID)
-                {
-                    bannedPlayers.Add(players[i]);
-                    players.RemoveAt(i);
-                }
-                else
-                {
-                    Console.WriteLine("Игрок с указанным номером не найден.");
-                    break;
-                }
-            }
-        }
-        public void UnbanPlayer()
-        {
-            Console.WriteLine($"Введите номер игрока, которого необходимо разбанить: ");
-            int unbanPlayerID = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                if (unbanPlayerID == bannedPlayers[i].PlayerID)
-                {
-                    players.Add(bannedPlayers[i]);
-                    bannedPlayers.RemoveAt(i);
-                }
-                else
-                {
-                    Console.WriteLine("Игрок с указанным номером не найден.");
-                    break;
                 }
             }
         }
 
-        class Player
+        class Database
         {
-            public int PlayerID { get; private set; }
-            public string PlayerName { get; private set; }
-            public int PlayerLevel { get; private set; }
+            private List<Player> _players = new List<Player>();
 
-            public Player(int playerID, string playerName, int playerLevel)
+            public Database()
             {
-                PlayerID = playerID;
-                PlayerName = playerName;
-                PlayerLevel = playerLevel;
             }
+
+            public void AddPlayer()
+            {
+                Console.WriteLine($"Введите номер игрока: ");
+                int playerId;
+
+                while (int.TryParse(Console.ReadLine(), out playerId) == false)
+                    Console.WriteLine("Введите число:");
+
+                Console.WriteLine($"Введите имя игрока: ");
+                string playerName = Console.ReadLine();
+
+                Console.WriteLine($"Введите уровень игрока: ");
+                int playerLevel;
+
+                while (int.TryParse(Console.ReadLine(), out playerLevel) == false)
+                    Console.WriteLine("Введите число:");
+
+                _players.Add(new Player(playerId, playerName, playerLevel, false));
+            }
+
+            public void RemovePlayer()
+            {
+                if (TryGetPlayer(out Player foundPlayer, "удалить"))
+                {
+                    _players.Remove(foundPlayer);
+                }
+            }
+
+            public void BanPlayer()
+            {
+                if (TryGetPlayer(out Player foundPlayer, "забанить"))
+                {
+                    foundPlayer.Ban();
+                }
+            }
+
+            public void UnbanPlayer()
+            {
+                if (TryGetPlayer(out Player foundPlayer, "разабанить"))
+                {
+                    foundPlayer.Unban();
+                }
+            }
+
             public void ShowInfo()
             {
-                Console.WriteLine($"Номер игрока: {PlayerID}\nИмя игрока: {PlayerName}\nУровень игрока: {PlayerLevel}");
+                foreach (var player in _players)
+                {
+                    player.ShowInfo();
+                }
+            }
+
+            private bool TryGetPlayer(out Player foundPlayer, string action)
+            {
+                foundPlayer = null;
+
+                Console.WriteLine($"Введите номер игрока, которого хотите {action}.");
+                int.TryParse(Console.ReadLine(), out int playerId);
+
+                foreach (Player player in _players)
+                {
+                    if (playerId == player.Id)
+                    {
+                        foundPlayer = player;
+                        return true;
+                    }
+                }
+
+                Console.WriteLine("Игрок под этим номером не найден.");
+                Console.ReadKey();
+                return false;
+            }
+
+            class Player
+            {
+                public Player(int id, string name, int level, bool isBanned)
+                {
+                    Id = id;
+                    Name = name;
+                    Level = level;
+                    IsBanned = isBanned;
+                }
+
+                public int Id { get; private set; }
+                public string Name { get; private set; }
+                public int Level { get; private set; }
+                public bool IsBanned { get; private set; }
+
+                public void ShowInfo()
+                {
+                    Console.WriteLine($"Номер игрока: {Id}." +
+                        $"\nИмя игрока: {Name}." +
+                        $"\nУровень игрока: {Level}." +
+                        $"\nСтатус блокировки игрока: {IsBanned}.");
+                }
+
+                public void Ban()
+                {
+                    IsBanned = true;
+                }
+
+                public void Unban()
+                {
+                    IsBanned = false;
+                }
             }
         }
     }
