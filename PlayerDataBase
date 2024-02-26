@@ -46,120 +46,110 @@ namespace Player_Database
                 }
             }
         }
+    }
+    class Database
+    {
+        private List<Player> _players = new List<Player>();
 
-        class Database
+        public void AddPlayer()
         {
-            private List<Player> _players = new List<Player>();
+            Console.WriteLine($"Введите имя игрока: ");
+            string playerName = Console.ReadLine();
 
-            public Database()
+            Console.WriteLine($"Введите уровень игрока: ");
+            int playerLevel;
+
+            while (int.TryParse(Console.ReadLine(), out playerLevel) == false)
+                Console.WriteLine("Введите число:");
+
+            _players.Add(new Player(playerName, playerLevel, false));
+        }
+
+        public void RemovePlayer()
+        {
+            if (TryGetPlayer(out Player foundPlayer, "удалить"))
             {
+                _players.Remove(foundPlayer);
             }
+        }
 
-            public void AddPlayer()
+        public void BanPlayer()
+        {
+            if (TryGetPlayer(out Player foundPlayer, "забанить"))
             {
-                Console.WriteLine($"Введите номер игрока: ");
-                int playerId;
-
-                while (int.TryParse(Console.ReadLine(), out playerId) == false)
-                    Console.WriteLine("Введите число:");
-
-                Console.WriteLine($"Введите имя игрока: ");
-                string playerName = Console.ReadLine();
-
-                Console.WriteLine($"Введите уровень игрока: ");
-                int playerLevel;
-
-                while (int.TryParse(Console.ReadLine(), out playerLevel) == false)
-                    Console.WriteLine("Введите число:");
-
-                _players.Add(new Player(playerId, playerName, playerLevel, false));
+                foundPlayer.Ban();
             }
+        }
 
-            public void RemovePlayer()
+        public void UnbanPlayer()
+        {
+            if (TryGetPlayer(out Player foundPlayer, "разабанить"))
             {
-                if (TryGetPlayer(out Player foundPlayer, "удалить"))
+                foundPlayer.Unban();
+            }
+        }
+
+        public void ShowInfo()
+        {
+            foreach (var player in _players)
+            {
+                player.ShowInfo();
+            }
+        }
+
+        private bool TryGetPlayer(out Player foundPlayer, string action)
+        {
+            foundPlayer = null;
+
+            Console.WriteLine($"Введите номер игрока, которого хотите {action}.");
+            int.TryParse(Console.ReadLine(), out int playerId);
+
+            foreach (Player player in _players)
+            {
+                if (playerId == player.Id)
                 {
-                    _players.Remove(foundPlayer);
+                    foundPlayer = player;
+                    return true;
                 }
             }
 
-            public void BanPlayer()
+            Console.WriteLine("Игрок под этим номером не найден.");
+            Console.ReadKey();
+            return false;
+        }
+
+        class Player
+        {
+            private static int _id = 1;
+            public Player(string name, int level, bool isBanned)
             {
-                if (TryGetPlayer(out Player foundPlayer, "забанить"))
-                {
-                    foundPlayer.Ban();
-                }
+                Id = _id++;
+                Name = name;
+                Level = level;
+                IsBanned = isBanned;
             }
 
-            public void UnbanPlayer()
-            {
-                if (TryGetPlayer(out Player foundPlayer, "разабанить"))
-                {
-                    foundPlayer.Unban();
-                }
-            }
+            public int Id { get; private set; }
+            public string Name { get; private set; }
+            public int Level { get; private set; }
+            public bool IsBanned { get; private set; }
 
             public void ShowInfo()
             {
-                foreach (var player in _players)
-                {
-                    player.ShowInfo();
-                }
+                Console.WriteLine($"Номер игрока: {Id}." +
+                    $"\nИмя игрока: {Name}." +
+                    $"\nУровень игрока: {Level}." +
+                    $"\nСтатус блокировки игрока: {IsBanned}.");
             }
 
-            private bool TryGetPlayer(out Player foundPlayer, string action)
+            public void Ban()
             {
-                foundPlayer = null;
-
-                Console.WriteLine($"Введите номер игрока, которого хотите {action}.");
-                int.TryParse(Console.ReadLine(), out int playerId);
-
-                foreach (Player player in _players)
-                {
-                    if (playerId == player.Id)
-                    {
-                        foundPlayer = player;
-                        return true;
-                    }
-                }
-
-                Console.WriteLine("Игрок под этим номером не найден.");
-                Console.ReadKey();
-                return false;
+                IsBanned = true;
             }
 
-            class Player
+            public void Unban()
             {
-                public Player(int id, string name, int level, bool isBanned)
-                {
-                    Id = id;
-                    Name = name;
-                    Level = level;
-                    IsBanned = isBanned;
-                }
-
-                public int Id { get; private set; }
-                public string Name { get; private set; }
-                public int Level { get; private set; }
-                public bool IsBanned { get; private set; }
-
-                public void ShowInfo()
-                {
-                    Console.WriteLine($"Номер игрока: {Id}." +
-                        $"\nИмя игрока: {Name}." +
-                        $"\nУровень игрока: {Level}." +
-                        $"\nСтатус блокировки игрока: {IsBanned}.");
-                }
-
-                public void Ban()
-                {
-                    IsBanned = true;
-                }
-
-                public void Unban()
-                {
-                    IsBanned = false;
-                }
+                IsBanned = false;
             }
         }
     }
